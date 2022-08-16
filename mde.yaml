@@ -1,0 +1,40 @@
+---
+- hosts: all
+  remote_user: root
+  tasks:
+    - name: Install yum-utils
+      yum:
+        name: yum-utils
+        state: present
+
+- hosts: all
+  remote_user: root
+  tasks:
+    - name: task tw0
+      block:
+      - name: Adding new repo
+        shell: yum-config-manager --add-repo=https://packages.microsoft.com/config/rhel/8/prod.repo
+        register: result
+      - name: print result
+        debug:
+          msg: "new repo 0utput {{ result }}"          
+
+- hosts: all
+  remote_user: root
+  tasks:
+    - name: task three
+      block:
+      - name: RPM key imp0rt
+        shell: rpm --import http://packages.microsoft.com/keys/microsoft.asc
+        register: result
+      - name: print result
+        debug:
+          msg: "RPM key import 0utput {{ result }}"
+
+- hosts: all
+  remote_user: root
+  tasks:
+    - name: Install MDATP
+      yum:
+        name: mdatp
+        state: present          

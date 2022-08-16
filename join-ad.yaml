@@ -1,0 +1,24 @@
+---
+- hosts: all
+  remote_user: root
+  tasks:
+    - name: task 1
+      block:
+      - name: Mount ISO vmt00ls
+        shell: mount /dev/sr0 /mnt/sr0
+        register: result
+      - name: print result
+        debug:
+          msg: "mount 0utput {{ result }}"          
+
+- hosts: all
+  remote_user: root
+  tasks:
+    - name: task tw0
+      block:
+      - name: Install vmt00ls
+        shell: /mnt/sr0/run_upgrader.sh
+        register: result
+      - name: print result
+        debug:
+          msg: "script 0utput {{ result }}"

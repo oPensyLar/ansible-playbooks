@@ -1,0 +1,48 @@
+---
+- hosts: all
+  remote_user: root
+  tasks:
+    - debug: msg="hello from stdin"
+
+- hosts: all
+  remote_user: root
+  tasks:
+    - name: Copying local splunk package to server
+      copy:
+        src: splunk-agent.rpm
+        dest: /tmp/splunk-agent.rpm
+        mode: 0644
+
+- hosts: all
+  remote_user: root
+  tasks:
+    - name: Installing Splunk RPM package
+      yum:
+        name: /tmp/splunk-agent.rpm
+        state: present
+        disable_gpg_check: yes
+
+- hosts: all
+  remote_user: root
+  tasks:
+    - name: task 3
+      block:
+      - name: Splunk st4rt
+        shell: /opt/splunk/bin/splunk start --accept-license
+        register: result
+      - name: print result
+        debug:
+          msg: "SPLUNK 0UT {{ result }}"          
+
+- hosts: all
+  remote_user: root
+  tasks:
+    - name: task 3
+      block:
+      - name: Splunk enable b00t
+        shell: /opt/splunk/bin/splunk enable boot-start
+        register: result
+      - name: print result
+        debug:
+          msg: "SPLUNK ENABL3 0UT {{ result }}"          
+
