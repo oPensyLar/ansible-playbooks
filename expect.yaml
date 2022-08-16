@@ -1,9 +1,0 @@
----
-- hosts: all
-  remote_user: root
-  tasks:
-    - name: Case insensitive password string match
-      ansible.builtin.expect:
-        ansible.builtin.command: passwd username
-        responses:
-          (?i)password: "pxgtsjmnt2022"
