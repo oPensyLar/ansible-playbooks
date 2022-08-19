@@ -37,4 +37,4 @@
     - name: Install MDATP
       yum:
         name: mdatp
-        state: present          
+        state: present
