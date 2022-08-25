@@ -1,0 +1,47 @@
+---
+- name: Stop Splunk Fordwarder
+  hosts: all
+  become: yes
+  become_user: splunk
+  tasks:
+    - name: task1
+      shell: /opt/splunkforwarder/bin/splunk stop
+      ignore_errors: yes
+
+
+- name: Status Splunk Fordwarder
+  hosts: all
+  become: yes
+  become_user: splunk
+  tasks:
+    - name: task2
+      shell: /opt/splunkforwarder/bin/splunk status
+      ignore_errors: yes
+
+
+- name: Checking rsyslog status
+  hosts: all
+  become: true
+  tasks:
+    - name: Get rsyslog status
+      service_facts:
+    - name: tast3
+      debug:
+        var: ansible_facts.services["rsyslog.service"]
+
+
+
+- name: Status rsyslog
+  hosts: all
+  become: yes
+  tasks:
+    - name: task4
+      shell: service rsyslog status
+
+
+- name: Shutdown server
+  hosts: all
+  become: yes
+  tasks:
+    - name: task5
+      shell: shutdown -h now

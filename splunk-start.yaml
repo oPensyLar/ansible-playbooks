@@ -1,0 +1,25 @@
+---
+- name: Stop Splunk
+  hosts: all
+  become: yes
+  become_user: splunk
+  tasks:
+    - name: task1
+      shell: /opt/splunk/bin/splunk stop
+
+- name: Status Splunk
+  hosts: all
+  become: yes
+  become_user: splunk
+  tasks:
+    - name: task2
+      shell: /opt/splunk/bin/splunk status
+      ignore_errors: yes
+
+
+- name: Shutdown server
+  hosts: all
+  become: yes
+  tasks:
+    - name: task3
+      shell: shutdown -h now      
