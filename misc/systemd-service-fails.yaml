@@ -1,0 +1,7 @@
+---
+- name: systemd services fail enum
+  hosts: all
+  tasks:
+    - name: task1
+      shell: systemctl list-units  --type=service --state=failed
+      ignore_errors: yes

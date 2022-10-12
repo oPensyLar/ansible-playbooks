@@ -1,0 +1,45 @@
+---
+- name: Stoping Splunk Fordwarder
+  hosts: all
+  become: yes
+  become_user: splunk
+  tasks:
+    - name: task1
+      shell: /opt/splunkforwarder/bin/splunk stop
+      ignore_errors: yes
+
+
+- name: Status Splunk Fordwarder
+  hosts: all
+  become: yes
+  become_user: splunk
+  tasks:
+    - name: task2
+      shell: /opt/splunkforwarder/bin/splunk status
+      ignore_errors: yes
+
+
+- name: Stoping rsyslog service
+  hosts: all
+  become: yes
+  tasks:
+    - name: task4
+      shell: service rsyslog stop
+
+
+
+- name: Status rsyslog
+  hosts: all
+  become: yes
+  tasks:
+    - name: task4
+      shell: service rsyslog status
+
+
+
+- name: Shutdown server
+  hosts: all
+  become: yes
+  tasks:
+    - name: task3
+      shell: shutdown -h now            
