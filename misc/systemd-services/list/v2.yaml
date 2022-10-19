@@ -19,3 +19,12 @@
         Report:
         {{ result }}
 
+
+- hosts: all
+  tasks:
+  - name: Sending mail to localhost
+    mail:
+      subject: Ansible-report
+      body: Hello, this is an simple report e-mail
+      to: root@localhost
+      attach: /tmp/serv_log.log
