@@ -1,0 +1,21 @@
+---
+- name: Listing fail services 
+  hosts: all
+  tasks:
+    - name: task1
+      shell: systemctl list-units -all --state=failed
+      register: result
+    - name: showing report
+      debug:
+        var: result
+
+
+- hosts: all
+  tasks:
+  - name: Creating a file with content
+    copy:
+      dest: "/tmp/serv_log.log"
+      content: |
+        Report:
+        {{ result }}
+
