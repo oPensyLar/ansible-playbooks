@@ -1,0 +1,40 @@
+---
+- name: checking service status
+  hosts: all
+  tasks:
+  - name: checking service status
+    command: systemctl status "{{ item }}"
+    with_items:
+    - firewalld1
+    - httpd11
+    - vsftpd1
+    - sshd11
+    - postfix1
+    register: result_srvs
+    ignore_errors: yes
+  - name: showing report
+    debug:
+     var: result_srvs
+
+
+- hosts: all
+  tasks:
+  - name: Creating a file with content
+    copy:
+      dest: "/tmp/serv_log.log"
+      content: |
+        Report:
+        {{ result_srvs }}
+
+
+- hosts: all
+  tasks:
+  - name: Creating a file with content
+  mail:
+    host: 127.0.0.1
+    subject: Ansible-report
+    body: Hello, this is an e-mail. I hope you like it ;-)
+    from: root@localhost
+    attach: /tmp/serv_log.log
+    charset: utf8
+  delegate_to: localhost    
